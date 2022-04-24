@@ -1,9 +1,33 @@
+import { FC, useEffect, useState } from "react";
+import Bar from "./Bar";
 
-const MainView = () => {
+interface BarI {
+    height: number;
+    width: number;
+}
+
+const MainView: FC = () => {
+    const [bars, setBars] = useState<BarI[]>([]);
+
+    useEffect(() => {
+        const bars: BarI[] = [
+            { height: 100, width: 100 },
+            { height: 50, width: 100 },
+            { height: 60, width: 100 },
+            { height: 55, width: 100 },
+        ];
+        setBars(bars);
+    }, []);
 
     return (
-        <div>
-            <h1>Hello World!</h1>
+        <div className="container">
+            {
+                bars.map(bar => (
+                    <div className="bar-container">
+                        <Bar  {...bar} />
+                    </div>
+                ))
+            }
         </div>
     )
 }
