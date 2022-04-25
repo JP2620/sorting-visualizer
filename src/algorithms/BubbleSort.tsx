@@ -6,12 +6,17 @@ type BarPropsI = {
     width: number;
     beingCompared: boolean;
 };
+
+type BarI = BarPropsI & {
+    sorted: boolean
+};
+
 const BubbleSort: FC = () => {
-    const [bars, setBars] = useState<BarPropsI[]>([]);
-    const [isSorting, setIsSorting] = useState(true);
+    const [bars, setBars] = useState<BarI[]>([]);
+    const [isSorted, setIsSorted] = useState(false);
 
 
-    const bars_ej: BarPropsI[] = [];
+    const bars_ej: BarI[] = [];
 
     let bucket = [];
     for (let i = 0; i < 100; i++) {
@@ -24,7 +29,8 @@ const BubbleSort: FC = () => {
         bars_ej.push({
             height: randomNumber,
             width: 100,
-            beingCompared: false
+            beingCompared: false,
+            sorted: false
         });
     }
 
@@ -64,9 +70,34 @@ const BubbleSort: FC = () => {
 
                 }
             }
+            setTimeout(() => {
+                counter++;
+                setIsSorted(true);
+                setBars((prevBars) => prevBars.map((bar) => {
+                    bar.beingCompared = false;
+                    return bar;
+                }))
+            }, counter * 300 + 300, counter);
             return prevBars;
         }))
+        
     }, []);
+
+    useEffect(() => {
+        if (isSorted) {
+            let counter = 0;
+            for (let i = 0; i < bars.length; i++) {
+                setTimeout(() => {
+                    setBars((prevBars) => {
+                        const bars: any[] = Object.assign([], prevBars);
+                        bars[i].sorted = true;
+                        return bars;
+                    })
+                }, counter * 50, counter);
+                counter++;
+            }
+        }
+    }, [isSorted])
 
 return (
     <div className="algo-container">
@@ -74,9 +105,7 @@ return (
             return (
                 <div key={index} className="bar-container">
                     <Bar
-                        height={bar.height}
-                        width={bar.width}
-                        beingCompared={bar.beingCompared}
+                     {...bar}
                     />
                 </div>
 

@@ -8,10 +8,11 @@
 html {
   height: 100vh;
   width: 100%;
+  background-color: whitesmoke;
 }
 
 main {
-  width: 30%;
+  width: max(40%, 700px);
   margin: 0 auto;
 }
 
@@ -35,11 +36,18 @@ main {
 }
 
 .bar {
-  width: 24px;
+  width: 30px;
+  margin: 2px;
+  border-width: 1px;
+  border-style: solid;
   border-color: black;
-  background-color: red;
+  background-color: cornflowerblue;
 }
 
 .being-compared {
-  background-color: blue;
+  background-color: deeppink;
+}
+
+.bar-sorted {
+  background-color: greenyellow
 }
