@@ -1,49 +1,31 @@
 import { FC, useEffect, useState } from "react";
+import { isPropertySignature } from "typescript";
 import Bar from "../components/Bar";
 
-type BarPropsI = {
+export interface BarI {
     height: number;
     width: number;
     beingCompared: boolean;
+    sorted: boolean;
 };
 
-type BarI = BarPropsI & {
-    sorted: boolean
+export type BubbleSortProps = {
+    bars: BarI[];
+    setBars: React.Dispatch<React.SetStateAction<BarI[]>>;
 };
 
-const BubbleSort: FC = () => {
-    const [bars, setBars] = useState<BarI[]>([]);
+const BubbleSort: FC <BubbleSortProps> = (props) => {
     const [isSorted, setIsSorted] = useState(false);
 
 
-    const bars_ej: BarI[] = [];
-
-    let bucket = [];
-    for (let i = 0; i < 100; i++) {
-        bucket.push(i)
-    }
-    for (let i = 0; i < 15; i++) {
-        let randomIndex = Math.floor(Math.random() * bucket.length);
-        let randomNumber = bucket[randomIndex];
-        bucket.splice(randomIndex, 1);
-        bars_ej.push({
-            height: randomNumber,
-            width: 100,
-            beingCompared: false,
-            sorted: false
-        });
-    }
-
-
     useEffect(() => {
-        setBars(bars_ej);
-        setBars((prevBars => {
+        props.setBars((prevBars => {
             let counter = 0;
             for (let i = 0; i < prevBars.length - 1; i++) {
                 for (let j = 0; j < prevBars.length - i - 1; j++) {
                     counter ++;
                     setTimeout(() => {
-                        setBars((prevBars) => {
+                        props.setBars((prevBars) => {
                             const bars: any[] = Object.assign([], prevBars);
                             if (j > 0) {
                                 bars[j - 1].beingCompared = false;
@@ -59,7 +41,7 @@ const BubbleSort: FC = () => {
                     }, counter * 300, counter);
 
                     setTimeout(() => {
-                        setBars((prevBars) => {
+                        props.setBars((prevBars) => {
                             const bars: any[] = Object.assign([], prevBars);
                             if (bars[j].height > bars[j + 1].height) {
                                 [bars[j], bars[j + 1]] = [bars[j + 1], bars[j]];
@@ -73,7 +55,7 @@ const BubbleSort: FC = () => {
             setTimeout(() => {
                 counter++;
                 setIsSorted(true);
-                setBars((prevBars) => prevBars.map((bar) => {
+                props.setBars((prevBars) => prevBars.map((bar) => {
                     bar.beingCompared = false;
                     return bar;
                 }))
@@ -86,9 +68,9 @@ const BubbleSort: FC = () => {
     useEffect(() => {
         if (isSorted) {
             let counter = 0;
-            for (let i = 0; i < bars.length; i++) {
+            for (let i = 0; i < props.bars.length; i++) {
                 setTimeout(() => {
-                    setBars((prevBars) => {
+                    props.setBars((prevBars) => {
                         const bars: any[] = Object.assign([], prevBars);
                         bars[i].sorted = true;
                         return bars;
@@ -101,7 +83,7 @@ const BubbleSort: FC = () => {
 
 return (
     <div className="algo-container">
-        {bars.map((bar, index) => {
+        {props.bars.map((bar, index) => {
             return (
                 <div key={index} className="bar-container">
                     <Bar
