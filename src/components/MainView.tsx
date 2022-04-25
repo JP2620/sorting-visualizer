@@ -48,11 +48,11 @@ const MainView : FC =  () => {
                 return { ...bar, beingCompared: false, sorted: false };
             })
         });
-        setSorting(false);
     }
 
     const handleClickShuffle = () => {
         shuffleBars();
+        setSorting(false);
     }
 
     useEffect(() => {
@@ -69,6 +69,7 @@ const MainView : FC =  () => {
         bars,
         setBars,
         setSorting,
+        algorithm
     }
 
     return (
@@ -82,8 +83,8 @@ const MainView : FC =  () => {
                 <div className="d-flex flex-column">
                     <label className="mb-3">Choose an algorithm:</label>
                     <select  disabled={sorting} ref={algoInput} name="algorithm" id="cars" onChange={handleAlgorithmChange}>
-                        <option value="bubblesort">Bubblesort</option>
-                        <option value="quicksort">Quicksort</option>
+                        <option value="bubblesort">Bubble Sort</option>
+                        <option value="insertionsort">Insertion Sort</option>
                     </select>
                 </div>
 
@@ -97,7 +98,7 @@ const MainView : FC =  () => {
                 </div>
             </form>
 
-            {sorting && algorithm === "bubblesort" && <BubbleSort {...algoProps}/>}
+            {sorting && algorithm && <BubbleSort {...algoProps}/>}
             
             <div className="algo-container">
                 {bars.map((bar, index) => {
