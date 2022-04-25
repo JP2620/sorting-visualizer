@@ -1,34 +1,25 @@
 import { FC, useEffect, useState } from "react";
+import BubbleSort from "../algorithms/BubbleSort";
 import Bar from "./Bar";
 
 interface BarI {
     height: number;
     width: number;
+    beingCompared: boolean;
 }
 
-const MainView: FC = () => {
-    const [bars, setBars] = useState<BarI[]>([]);
+const MainView = () => {
 
-    useEffect(() => {
-        const bars: BarI[] = [
-            { height: 100, width: 100 },
-            { height: 50, width: 100 },
-            { height: 60, width: 100 },
-            { height: 55, width: 100 },
-        ];
-        setBars(bars);
-    }, []);
+    const [algorithm, setAlgorithm] = useState<"bubblesort" | "quicksort" | null>(null);
+
 
     return (
-        <div className="container">
-            {
-                bars.map(bar => (
-                    <div className="bar-container">
-                        <Bar  {...bar} />
-                    </div>
-                ))
-            }
-        </div>
+        <main>
+            <button onClick={(e) => setAlgorithm("bubblesort")}>Empezar</button>
+            {algorithm === "bubblesort" && <BubbleSort />}
+
+        </main>
+
     )
 }
 

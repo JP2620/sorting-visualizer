@@ -1,18 +1,14 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 interface BarPropsI {
     height: number;
     width: number;
+    beingCompared: boolean;
 }
 const Bar = (props: BarPropsI) => {
-    const [beingCompared, setBeingCompared] = useState(false);
-    const styles = {
-        height: `${props.height}px`,
-    }
     return (
-        <div className={`bar ${beingCompared? "being-compared" : ""}`}
-        style={styles}>
-            Bar
+        <div className={`bar ${props.beingCompared? "being-compared" : ""}`}
+        style={{height:`${props.height}%`}}>
         </div>
     );
 }
