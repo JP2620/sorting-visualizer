@@ -12,10 +12,13 @@ export interface BarI {
 export type BubbleSortProps = {
     bars: BarI[];
     setBars: React.Dispatch<React.SetStateAction<BarI[]>>;
+    setSorting: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const BubbleSort: FC <BubbleSortProps> = (props) => {
     const [isSorted, setIsSorted] = useState(false);
+    const [finishedSorting, setFinishedSorting] = useState<boolean>(false);
+
 
 
     useEffect(() => {
@@ -54,7 +57,7 @@ const BubbleSort: FC <BubbleSortProps> = (props) => {
             }
             setTimeout(() => {
                 counter++;
-                setIsSorted(true);
+                setFinishedSorting(true);
                 props.setBars((prevBars) => prevBars.map((bar) => {
                     bar.beingCompared = false;
                     return bar;
@@ -66,7 +69,7 @@ const BubbleSort: FC <BubbleSortProps> = (props) => {
     }, []);
 
     useEffect(() => {
-        if (isSorted) {
+        if (finishedSorting) {
             let counter = 0;
             for (let i = 0; i < props.bars.length; i++) {
                 setTimeout(() => {
@@ -78,22 +81,13 @@ const BubbleSort: FC <BubbleSortProps> = (props) => {
                 }, counter * 50, counter);
                 counter++;
             }
+            setTimeout(() => {
+                props.setSorting(false)
+            }, counter * 50 + 50, counter);
         }
-    }, [isSorted])
+    }, [finishedSorting])
 
-return (
-    <div className="algo-container">
-        {props.bars.map((bar, index) => {
-            return (
-                <div key={index} className="bar-container">
-                    <Bar
-                     {...bar}
-                    />
-                </div>
-
-            );
-        })}
-    </div>)
+return (<></>)
 }
 
 
