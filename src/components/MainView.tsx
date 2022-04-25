@@ -1,5 +1,5 @@
 import { FC, useEffect, useRef, useState } from "react";
-import BubbleSort from "../algorithms/BubbleSort";
+import BubbleSort, { BubbleSortProps } from "../algorithms/BubbleSort";
 import { BarI } from "../algorithms/BubbleSort";
 import Bar from "./Bar";
 
@@ -21,7 +21,7 @@ const MainView : FC =  () => {
     for (let i = 0; i < 100; i++) {
         bucket.push(i)
     }
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 13; i++) {
         let randomIndex = Math.floor(Math.random() * bucket.length);
         let randomNumber = bucket[randomIndex];
         bucket.splice(randomIndex, 1);
@@ -65,6 +65,11 @@ const MainView : FC =  () => {
         }
     }, [algorithm])
 
+    const algoProps: BubbleSortProps = {
+        bars,
+        setBars,
+        setSorting,
+    }
 
     return (
         <main>
@@ -92,7 +97,7 @@ const MainView : FC =  () => {
                 </div>
             </form>
 
-            {sorting && algorithm === "bubblesort" && <BubbleSort bars={bars} setBars={setBars} setSorting={setSorting}/>}
+            {sorting && algorithm === "bubblesort" && <BubbleSort {...algoProps}/>}
             
             <div className="algo-container">
                 {bars.map((bar, index) => {
