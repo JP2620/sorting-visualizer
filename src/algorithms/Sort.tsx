@@ -15,14 +15,14 @@ export interface BarI {
     sorted: boolean;
 };
 
-export type BubbleSortProps = {
+export type SortProps = {
     bars: BarI[];
     setBars: React.Dispatch<React.SetStateAction<BarI[]>>;
     setSorting: React.Dispatch<React.SetStateAction<boolean>>;
     algorithm: string | null;
 };
 
-const BubbleSort: FC<BubbleSortProps> = (props) => {
+const Sort: FC<SortProps> = (props) => {
     const [finishedSorting, setFinishedSorting] = useState<boolean>(false);
     const comparisonDelay = 250;
     const bubbleSort = (bars: BarI[]): SortAction[] => {
@@ -138,4 +138,4 @@ const BubbleSort: FC<BubbleSortProps> = (props) => {
 }
 
 
-export default BubbleSort;
+export default Sort;

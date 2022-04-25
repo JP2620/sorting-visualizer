@@ -1,6 +1,6 @@
 import { FC, useEffect, useRef, useState } from "react";
-import BubbleSort, { BubbleSortProps } from "../algorithms/BubbleSort";
-import { BarI } from "../algorithms/BubbleSort";
+import Sort, { SortProps } from "../algorithms/Sort";
+import { BarI } from "../algorithms/Sort";
 import Bar from "./Bar";
 
 
@@ -65,7 +65,7 @@ const MainView : FC =  () => {
         }
     }, [algorithm])
 
-    const algoProps: BubbleSortProps = {
+    const algoProps: SortProps = {
         bars,
         setBars,
         setSorting,
@@ -98,7 +98,7 @@ const MainView : FC =  () => {
                 </div>
             </form>
 
-            {sorting && algorithm && <BubbleSort {...algoProps}/>}
+            {sorting && algorithm && <Sort {...algoProps}/>}
             
             <div className="algo-container">
                 {bars.map((bar, index) => {
