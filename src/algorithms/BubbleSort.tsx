@@ -18,7 +18,7 @@ export type BubbleSortProps = {
 const BubbleSort: FC <BubbleSortProps> = (props) => {
     const [isSorted, setIsSorted] = useState(false);
     const [finishedSorting, setFinishedSorting] = useState<boolean>(false);
-
+    const comparisonDelay = 100;
 
 
     useEffect(() => {
@@ -41,7 +41,7 @@ const BubbleSort: FC <BubbleSortProps> = (props) => {
                             bars[j + 1].beingCompared = true;
                             return bars
                         })
-                    }, counter * 300, counter);
+                    }, counter * comparisonDelay, counter);
 
                     setTimeout(() => {
                         props.setBars((prevBars) => {
@@ -51,7 +51,7 @@ const BubbleSort: FC <BubbleSortProps> = (props) => {
                             }
                             return bars;
                         })
-                    }, counter * 300 + 150, counter);
+                    }, counter * comparisonDelay + comparisonDelay / 2, counter);
 
                 }
             }
@@ -62,7 +62,7 @@ const BubbleSort: FC <BubbleSortProps> = (props) => {
                     bar.beingCompared = false;
                     return bar;
                 }))
-            }, counter * 300 + 300, counter);
+            }, counter * comparisonDelay + comparisonDelay / 2, counter);
             return prevBars;
         }))
         
