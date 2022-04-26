@@ -18,6 +18,8 @@ export type SortProps = {
     bars: BarI[];
     setBars: React.Dispatch<React.SetStateAction<BarI[]>>;
     setSorting: React.Dispatch<React.SetStateAction<boolean>>;
+    setCountComparisons: React.Dispatch<React.SetStateAction<number>>;
+    setCountSwaps: React.Dispatch<React.SetStateAction<number>>;
     algorithm: string | null;
 };
 
@@ -48,12 +50,14 @@ const Sort: FC<SortProps> = (props) => {
                 props.setBars((prevBars: BarI[]) => {
                     let newBars: BarI[] = Object.assign([], prevBars);
                     if (actions[counter].type === "compare") {
+                        props.setCountComparisons((prevCount) => prevCount + 1);
                         newBars = newBars.map((bar: BarI) => {
                             return { ...bar, beingCompared: false };
                         });
                         newBars[actions[counter].index1].beingCompared = true;
                         newBars[actions[counter].index2].beingCompared = true;
                     } else if (actions[counter].type === "swap") {
+                        props.setCountSwaps((prevCount) => prevCount + 1);
                         let i1: number = actions[counter].index1;
                         let i2: number = actions[counter].index2;
                         [newBars[i1], newBars[i2]] = [newBars[i2], newBars[i1]]

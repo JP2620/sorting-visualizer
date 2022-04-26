@@ -5,6 +5,8 @@ import Bar from "./Bar";
 
 
 const MainView : FC =  () => {
+    const [countComparisons, setCountComparisons] = useState(0);
+    const [countSwaps, setCountSwaps] = useState(0);
 
     const [algorithm, setAlgorithm] = useState<string | null>(null);
     const [sorting, setSorting] = useState<boolean>(false);
@@ -36,6 +38,8 @@ const MainView : FC =  () => {
     }
 
     const shuffleBars = () => {
+        setCountComparisons(0);
+        setCountSwaps(0);
         setBars((prevBars: BarI[]) => {
             const newBars: BarI[] = Object.assign([], prevBars);
             let currentIndex = newBars.length;
@@ -53,6 +57,9 @@ const MainView : FC =  () => {
     }
 
     const handleClickShuffle = () => {
+        setCountComparisons(0);
+        setCountSwaps(0);
+
         shuffleBars();
         setSorting(false);
     }
@@ -71,7 +78,9 @@ const MainView : FC =  () => {
         bars,
         setBars,
         setSorting,
-        algorithm
+        algorithm,
+        setCountComparisons,
+        setCountSwaps,
     }
 
     return (
@@ -90,6 +99,8 @@ const MainView : FC =  () => {
 
                 <div className="d-flex flex-column">
                     <button onClick={(e) => {
+                        setCountComparisons(0);
+                        setCountSwaps(0);
                         setAlgorithm(null);
                         setSorting(true);
                     }} className="mb-3" disabled={sorting}>Start</button>
@@ -100,18 +111,25 @@ const MainView : FC =  () => {
 
             {sorting && algorithm && <Sort {...algoProps}/>}
             
-            <div className="algo-container">
-                {bars.map((bar, index) => {
-                    return (
-                        <div key={index} className="bar-container">
-                            <Bar
-                                {...bar}
-                            />
-                        </div>
+            <div>
+                <div className="w-100 d-flex flex-row justify-content-around mb-2">
+                    <div>Comparisons: {countComparisons}</div>
+                    <div>Swaps: {countSwaps}</div>
+                </div>
+                <div className="algo-container">
+                    {bars.map((bar, index) => {
+                        return (
+                            <div key={index} className="bar-container">
+                                <Bar
+                                    {...bar}
+                                />
+                            </div>
 
-                    );
-                })}
+                        );
+                    })}
+                </div>
             </div>
+
 
             <section>
                 <article>
@@ -122,11 +140,11 @@ const MainView : FC =  () => {
                 </article>
                 <article>
                     <h2>Insertion Sort</h2>
-                    <p>Insertion sort is the sorting mechanism where the sorted array is built having one item at a time. The array elements are compared with each other sequentially and then arranged simultaneously in some particular order.</p>
+                    <p>Insertion sort iterates, consuming one input element each repetition, and grows a sorted output list. At each iteration, insertion sort removes one element from the input data, finds the location it belongs within the sorted list, and inserts it there. It repeats until no input elements remain.</p>
                 </article>
                 <article>
                     <h2>Selection Sort</h2>
-                    <p>selection sort is an in-place comparison sorting algorithm. It has an O(n2) time complexity, which makes it inefficient on large lists, and generally performs worse than the similar insertion sort.</p>
+                    <p>The algorithm divides the input list into two parts: a sorted sublist of items which is built up from left to right at the front (left) of the list and a sublist of the remaining unsorted items that occupy the rest of the list. Initially, the sorted sublist is empty and the unsorted sublist is the entire input list. The algorithm proceeds by finding the smallest (or largest, depending on sorting order) element in the unsorted sublist, exchanging (swapping) it with the leftmost unsorted element (putting it in sorted order), and moving the sublist boundaries one element to the right.</p>
                 </article>
                 <article>
                     <h2>Gnome Sort</h2>

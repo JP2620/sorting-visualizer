@@ -10,7 +10,7 @@ function App() {
       <MainView />
       <footer className='d-flex flex-row justify-content-center align-content-center pt-3'>
         <p>
-          Developed by <a href="www.github.com/JP2620">Juan Pablo Saucedo</a>
+          Developed by <a href="https://www.linkedin.com/in/jpsaucedo/" target="_blank">Juan Pablo Saucedo</a>
         </p>
       </footer>
     </div>
