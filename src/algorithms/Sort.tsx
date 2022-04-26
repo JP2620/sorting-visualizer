@@ -24,7 +24,7 @@ export type SortProps = {
 
 const Sort: FC<SortProps> = (props) => {
     const [finishedSorting, setFinishedSorting] = useState<boolean>(false);
-    const comparisonDelay = 250;
+    const comparisonDelay = 100;
     const bubbleSort = (bars: BarI[]): SortAction[] => {
         let actions: SortAction[] = [];
         for (let i = 0; i < bars.length; i++) {
@@ -96,8 +96,33 @@ const Sort: FC<SortProps> = (props) => {
         return actions;
     }
 
+    const gnomeSort = (bars: BarI[]): SortAction[] => {
+        let actions: SortAction[] = [];
+        let index = 0;
+        while (index < bars.length) {
+            if (index !== 0) {
+                actions.push({
+                    type: "compare",
+                    index1: index - 1,
+                    index2: index
+                });
+            }
+            if (index === 0 || bars[index - 1].height <= bars[index].height) {
+                index++;
+            } else {
+                actions.push({
+                    type: "swap",
+                    index1: index - 1,
+                    index2: index
+                });
+                [bars[index - 1], bars[index]] = [bars[index], bars[index - 1]];
+                index--;
+            }
+        }
+        return actions;
+    }
+
     useEffect(() => {
-        console.log(props.algorithm);
         let algorithm: (bars: BarI[]) => SortAction[];
         if (props.algorithm === "bubblesort") {
             algorithm = bubbleSort;
@@ -105,9 +130,12 @@ const Sort: FC<SortProps> = (props) => {
             algorithm = insertionSort;  
         } else if (props.algorithm === "selectionsort") {
             algorithm = selectionSort;
+        } else if (props.algorithm === "gnomesort") {
+            algorithm = gnomeSort;
         } else {
             return;
         }
+        console.log(props.bars.map(a => ({ ...a })))
         
         const actions: SortAction[] = algorithm(props.bars.map(a => ({ ...a })));
         for (let counter = 0; counter < actions.length; counter++) {

@@ -88,6 +88,7 @@ const MainView : FC =  () => {
                         <option value="bubblesort">Bubble Sort</option>
                         <option value="insertionsort">Insertion Sort</option>
                         <option value="selectionsort">Selection Sort</option>
+                        <option value="gnomesort">Gnome Sort</option>
                     </select>
                 </div>
 
