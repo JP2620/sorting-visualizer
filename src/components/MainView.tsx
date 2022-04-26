@@ -21,6 +21,8 @@ const MainView : FC =  () => {
     for (let i = 0; i < 100; i++) {
         bucket.push(i)
     }
+
+    
     for (let i = 0; i < 13; i++) {
         let randomIndex = Math.floor(Math.random() * bucket.length);
         let randomNumber = bucket[randomIndex];
