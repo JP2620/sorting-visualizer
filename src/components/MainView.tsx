@@ -87,6 +87,7 @@ const MainView : FC =  () => {
                     <select  disabled={sorting} ref={algoInput} name="algorithm" id="cars" onChange={handleAlgorithmChange}>
                         <option value="bubblesort">Bubble Sort</option>
                         <option value="insertionsort">Insertion Sort</option>
+                        <option value="selectionsort">Selection Sort</option>
                     </select>
                 </div>
 

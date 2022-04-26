@@ -72,16 +72,43 @@ const Sort: FC<SortProps> = (props) => {
         return actions;
     }
 
+    const selectionSort = (bars: BarI[]): SortAction[] => {
+        let actions: SortAction[] = [];
+        for (let i = 0; i < bars.length; i++) {
+            let lowest = i;
+            for (let j = i + 1; j < bars.length; j++) {
+                actions.push({
+                    type: "compare",
+                    index1: i,
+                    index2: j
+                });
+                if (bars[j].height < bars[lowest].height) {
+                    lowest = j;
+                }
+            }
+            actions.push({
+                type: "swap",
+                index1: i,
+                index2: lowest
+            });
+            [bars[i], bars[lowest]] = [bars[lowest], bars[i]];
+        }
+        return actions;
+    }
+
     useEffect(() => {
         console.log(props.algorithm);
         let algorithm: (bars: BarI[]) => SortAction[];
         if (props.algorithm === "bubblesort") {
             algorithm = bubbleSort;
         } else if (props.algorithm === "insertionsort") {
-            algorithm = insertionSort;
-        }   else {
+            algorithm = insertionSort;  
+        } else if (props.algorithm === "selectionsort") {
+            algorithm = selectionSort;
+        } else {
             return;
         }
+        
         const actions: SortAction[] = algorithm(props.bars.map(a => ({ ...a })));
         for (let counter = 0; counter < actions.length; counter++) {
             const delay: number = counter * comparisonDelay;
