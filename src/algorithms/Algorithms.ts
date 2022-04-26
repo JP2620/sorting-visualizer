@@ -55,8 +55,8 @@ const selectionSort = (bars: BarI[]): SortAction[] => {
         for (let j = i + 1; j < bars.length; j++) {
             actions.push({
                 type: "compare",
-                index1: i,
-                index2: j
+                index1: j,
+                index2: lowest
             });
             if (bars[j].height < bars[lowest].height) {
                 lowest = j;
@@ -98,4 +98,67 @@ const gnomeSort = (bars: BarI[]): SortAction[] => {
     return actions;
 }
 
-export { bubbleSort, insertionSort, selectionSort, gnomeSort };
+const partition = (items: BarI[], left: number, right: number, actions: SortAction[]) => {
+    var pivot   = items[Math.floor((right + left) / 2)], //middle element
+        i       = left, //left pointer
+        j       = right; //right pointer
+    while (i <= j) {
+        //move i until hit an item smaller than the pivot
+        actions.push({
+            type: "compare",
+            index1: i,
+            index2: Math.floor((right + left) / 2)
+        })
+        while (items[i].height < pivot.height) {
+            i++;
+        }
+
+        actions.push({
+            type: "compare",
+            index1: j,
+            index2: Math.floor((right + left) / 2)
+        })
+
+        //move j until hit an item bigger than the pivot
+        while (items[j].height > pivot.height) {
+            j--;
+        }
+
+        //if i <= j then swap items[i] and items[j]
+        if (i <= j) {
+            actions.push({
+                type: "swap",
+                index1: i,
+                index2: j
+            });
+            [items[i], items[j]] = [items[j], items[i]];
+            i++;
+            j--;
+        }
+    }
+    return i;
+}
+
+const quickSort2 = (items: BarI[], left: number, right: number, actions: SortAction[]): BarI[] => {
+    var index;
+    if (items.length > 1) {
+        index = partition(items, left, right, actions); //index returned from partition
+        if (left < index - 1) { //more elements on the left side of the pivot
+            quickSort2(items, left, index - 1, actions);
+        }
+        if (index < right) { //more elements on the right side of the pivot
+            quickSort2(items, index, right, actions);
+        }
+    }
+    return items;
+}
+
+const quickSort = (bars: BarI[]): SortAction[] => {
+    let actions: SortAction[] = [];
+    quickSort2(bars, 0, bars.length - 1, actions);
+    return actions;
+}
+
+
+
+export { bubbleSort, insertionSort, selectionSort, gnomeSort, quickSort };

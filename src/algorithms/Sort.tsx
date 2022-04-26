@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { bubbleSort, gnomeSort, insertionSort, selectionSort } from "./Algorithms";
+import { bubbleSort, gnomeSort, insertionSort, quickSort, selectionSort } from "./Algorithms";
 
 export interface SortAction {
     type: "compare" | "swap";
@@ -38,10 +38,11 @@ const Sort: FC<SortProps> = (props) => {
             algorithm = selectionSort;
         } else if (props.algorithm === "gnomesort") {
             algorithm = gnomeSort;
+        } else if (props.algorithm === "quicksort") {
+            algorithm = quickSort;
         } else {
             return;
         }
-        console.log(props.bars.map(a => ({ ...a })))
         
         const actions: SortAction[] = algorithm(props.bars.map(a => ({ ...a })));
         for (let counter = 0; counter < actions.length; counter++) {
@@ -62,13 +63,13 @@ const Sort: FC<SortProps> = (props) => {
                         let i2: number = actions[counter].index2;
                         [newBars[i1], newBars[i2]] = [newBars[i2], newBars[i1]]
                     }
-                    console.log(newBars)
                     return newBars;
                 })
 
                 if (counter == actions.length - 1) {
                     setFinishedSorting(true);
                     props.setBars((prevBars: BarI[]) => {
+                        console.log(prevBars);
                         return prevBars.map((bar: BarI) => {
                             return { ...bar, beingCompared: false }
                         })

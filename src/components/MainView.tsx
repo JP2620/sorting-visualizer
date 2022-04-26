@@ -94,6 +94,7 @@ const MainView : FC =  () => {
                         <option value="insertionsort">Insertion Sort</option>
                         <option value="selectionsort">Selection Sort</option>
                         <option value="gnomesort">Gnome Sort</option>
+                        <option value="quicksort">Quick Sort</option>
                     </select>
                 </div>
 
