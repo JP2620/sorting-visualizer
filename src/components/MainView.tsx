@@ -76,10 +76,6 @@ const MainView : FC =  () => {
 
     return (
         <main>
-            <header>
-                <h1>Sorting Visualizer</h1>
-            </header>
-
             <form onSubmit={(e) => { e.preventDefault() }}
                 className="d-flex flex-row p-4 justify-content-around">
                 <div className="d-flex flex-column">
@@ -116,6 +112,27 @@ const MainView : FC =  () => {
                     );
                 })}
             </div>
+
+            <section>
+                <article>
+                    <h2>Bubble Sort</h2>
+                    <p>
+                    Bubble sort, sometimes referred to as sinking sort, is a simple sorting algorithm that repeatedly steps through the list, compares adjacent elements and swaps them if they are in the wrong order. The pass through the list is repeated until the list is sorted.
+                    </p>
+                </article>
+                <article>
+                    <h2>Insertion Sort</h2>
+                    <p>Insertion sort is the sorting mechanism where the sorted array is built having one item at a time. The array elements are compared with each other sequentially and then arranged simultaneously in some particular order.</p>
+                </article>
+                <article>
+                    <h2>Selection Sort</h2>
+                    <p>selection sort is an in-place comparison sorting algorithm. It has an O(n2) time complexity, which makes it inefficient on large lists, and generally performs worse than the similar insertion sort.</p>
+                </article>
+                <article>
+                    <h2>Gnome Sort</h2>
+                    <p>Gnome sort performs at least as many comparisons as insertion sort and has the same asymptotic runtime characteristics. Gnome sort works by building a sorted list one element at a time, getting each item to the proper place in a series of swaps. The average running time is O(n2) but tends towards O(n) if the list is initially almost sorted.</p>
+                </article>
+            </section>
 
         </main>
     )

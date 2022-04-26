@@ -6,9 +6,8 @@
 }
 
 html {
-  height: 100vh;
+  height: 100%;
   width: 100%;
-  background-color: whitesmoke;
 }
 
 .app {
@@ -20,11 +19,17 @@ html {
 
 h1 {
   font-size: 24px;
+  font-weight: 550;
+}
+
+h2 {
+  font-size: 20px;
+  text-decoration: underline;
 }
 
 main {
   width: max(325px, 40%);
-  height: 100vh;
+  height: 100%;
   margin: 0 auto;
   border-width: 0 1px 0 1px;
   border-style: solid;
@@ -33,11 +38,13 @@ main {
 }
 
 header {
+  width: max(325px, 40%);
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 0.7rem;
-  border-bottom: 1px solid #e6e6e6;
+  border: solid #e6e6e6;
+  border-width: 0 1px 1px 1px;
 }
 
 .algo-container {
@@ -84,6 +91,16 @@ button {
   padding: 0.2rem;
 }
 
+section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: justify;
+}
+article {
+  padding: 1.5rem;
+}
 
 @media (min-width: 1024px) { 
   .bar {
@@ -106,4 +123,12 @@ button {
     width: 30px;
     margin: 2px;
   }
+}
+
+footer {
+  width: max(325px, 40%);
+  font-size: small;
+  border: solid #e6e6e6;
+  margin: 0 auto;
+  border-width: 1px 1px 0 1px;
 }
