@@ -62,24 +62,24 @@ header {
   justify-content: flex-end;
   height: 30vh;
   margin: 1px;
-  width: 20px;
+  width: 12px;
 }
 
 .bar {
-  width: 20px;
+  width: 100%;
   border-width: 1px;
   border-style: solid;
   border-color: black;
-  background-color: cornflowerblue;
+  background-color: rgb(109, 159, 245);
 }
 
 .being-compared {
-  background-color: deeppink;
+  background-color: rgb(243, 104, 178);
 }
 
 
 .bar-sorted {
-  background-color: greenyellow
+  background-color: rgb(203, 253, 129);
 }
 
 select {
@@ -104,11 +104,11 @@ article {
 
 @media (min-width: 1024px) { 
   .bar {
-    width: 25px;
+    width: 100%;
   }
   .bar-container {
-    width: 25px;
-    margin: 2px;
+    width: 16px;
+    margin: 1px;
   }
   h1 {
     font-size: 32px;
@@ -117,11 +117,11 @@ article {
 
 @media (min-width: 1900px) { 
   .bar {
-    width: 30px;
+    width: 100%;
   }
   .bar-container {
     width: 30px;
-    margin: 2px;
+    margin: 1px;
   }
 }
 
@@ -131,4 +131,9 @@ footer {
   border: solid #e6e6e6;
   margin: 0 auto;
   border-width: 1px 1px 0 1px;
+}
+
+.btn-speed {
+  font-size: small;
+  width: 60px;
 }

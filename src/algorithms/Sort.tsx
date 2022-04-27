@@ -21,6 +21,7 @@ export type SortProps = {
     setCountComparisons: React.Dispatch<React.SetStateAction<number>>;
     setCountSwaps: React.Dispatch<React.SetStateAction<number>>;
     algorithm: string | null;
+    sortingSpeed: number;
 };
 
 const Sort: FC<SortProps> = (props) => {
@@ -75,7 +76,7 @@ const Sort: FC<SortProps> = (props) => {
                         })
                     });
                 }
-            }, delay, counter);
+            }, (1 / props.sortingSpeed) *  delay, counter);
         }
     }, []);
 
@@ -94,7 +95,7 @@ const Sort: FC<SortProps> = (props) => {
             }
             setTimeout(() => {
                 props.setSorting(false)
-            }, counter * 50 + 50, counter);
+            }, (counter * 50 + 50) * (1 / props.sortingSpeed), counter);
         }
     }, [finishedSorting])
 

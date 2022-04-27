@@ -5,6 +5,8 @@ import Bar from "./Bar";
 
 
 const MainView : FC =  () => {
+    const speeds: number[] = [0.5, 1, 1.5, 2]
+    const [sortingSpeed, setSortingSpeed] = useState(1);
     const [countComparisons, setCountComparisons] = useState(0);
     const [countSwaps, setCountSwaps] = useState(0);
 
@@ -25,7 +27,7 @@ const MainView : FC =  () => {
     }
 
     
-    for (let i = 0; i < 13; i++) {
+    for (let i = 0; i < 20; i++) {
         let randomIndex = Math.floor(Math.random() * bucket.length);
         let randomNumber = bucket[randomIndex];
         bucket.splice(randomIndex, 1);
@@ -64,6 +66,16 @@ const MainView : FC =  () => {
         setSorting(false);
     }
 
+    const handleClickSpeedChange: React.MouseEventHandler<HTMLButtonElement> = (event) => {
+        const newSpeed = speeds.indexOf(sortingSpeed) + 1;
+        if (newSpeed >= speeds.length) {
+            setSortingSpeed(speeds[0]);
+        } else {
+            setSortingSpeed(speeds[newSpeed]);
+        }
+    }
+
+
     useEffect(() => {
         setBars(bars_ej);
     }, [])
@@ -81,15 +93,16 @@ const MainView : FC =  () => {
         algorithm,
         setCountComparisons,
         setCountSwaps,
+        sortingSpeed
     }
 
     return (
         <main>
             <form onSubmit={(e) => { e.preventDefault() }}
-                className="d-flex flex-row p-4 justify-content-around">
-                <div className="d-flex flex-column">
-                    <label className="mb-3">Choose an algorithm:</label>
-                    <select  disabled={sorting} ref={algoInput} name="algorithm" id="cars" onChange={handleAlgorithmChange}>
+                className="d-flex flex-column py-2 justify-content-around">
+                <label className="mx-auto">Select an Algorithm</label>
+                <div className="d-flex flex-row justify-content-center py-2 text-center">
+                    <select  className="" disabled={sorting} ref={algoInput} name="algorithm" id="cars" onChange={handleAlgorithmChange}>
                         <option value="bubblesort">Bubble Sort</option>
                         <option value="insertionsort">Insertion Sort</option>
                         <option value="selectionsort">Selection Sort</option>
@@ -98,15 +111,14 @@ const MainView : FC =  () => {
                     </select>
                 </div>
 
-                <div className="d-flex flex-column">
+                <div className="d-flex flex-row justify-content-around">
+                    <button className="btn btn-outline-secondary btn-sm" onClick={(e) => shuffleBars()} disabled={sorting}>Shuffle</button>
                     <button onClick={(e) => {
                         setCountComparisons(0);
                         setCountSwaps(0);
                         setAlgorithm(null);
                         setSorting(true);
-                    }} className="mb-3" disabled={sorting}>Start</button>
-                    <button onClick={(e) => shuffleBars()} disabled={sorting}>Shuffle</button>
-
+                    }} className="btn btn-secondary btn-sm mb-" disabled={sorting}>Start</button>
                 </div>
             </form>
 
@@ -116,6 +128,10 @@ const MainView : FC =  () => {
                 <div className="w-100 d-flex flex-row justify-content-around mb-2">
                     <div>Comparisons: {countComparisons}</div>
                     <div>Swaps: {countSwaps}</div>
+                </div>
+                <div className="w-100 d-flex justify-content-center">
+                    <button className="btn btn-outline-secondary btn-speed" disabled={sorting} onClick={handleClickSpeedChange}
+                    onMouseDown={(e: React.MouseEvent<HTMLButtonElement>) => e.preventDefault()}>x{sortingSpeed}</button>
                 </div>
                 <div className="algo-container">
                     {bars.map((bar, index) => {
