@@ -20,30 +20,25 @@ export type SortProps = {
     setSorting: React.Dispatch<React.SetStateAction<boolean>>;
     setCountComparisons: React.Dispatch<React.SetStateAction<number>>;
     setCountSwaps: React.Dispatch<React.SetStateAction<number>>;
-    algorithm: string | null;
+    algorithm: "bubblesort" | "gnomesort" | "insertionsort" | "quicksort" | "selectionsort";
     sortingSpeed: number;
 };
 
 const Sort: FC<SortProps> = (props) => {
     const [finishedSorting, setFinishedSorting] = useState<boolean>(false);
     const comparisonDelay = 100;
+    const algorithms : {[name: string]: (bars: BarI[]) => SortAction[]} = {
+        "bubblesort": bubbleSort,
+        "gnomesort": gnomeSort,
+        "insertionsort": insertionSort,
+        "quicksort": quickSort,
+        "selectionsort": selectionSort,
+    };
+    
 
 
     useEffect(() => {
-        let algorithm: (bars: BarI[]) => SortAction[];
-        if (props.algorithm === "bubblesort") {
-            algorithm = bubbleSort;
-        } else if (props.algorithm === "insertionsort") {
-            algorithm = insertionSort;  
-        } else if (props.algorithm === "selectionsort") {
-            algorithm = selectionSort;
-        } else if (props.algorithm === "gnomesort") {
-            algorithm = gnomeSort;
-        } else if (props.algorithm === "quicksort") {
-            algorithm = quickSort;
-        } else {
-            return;
-        }
+        let algorithm: (bars: BarI[]) => SortAction[] = algorithms[props.algorithm];
         
         const actions: SortAction[] = algorithm(props.bars.map(a => ({ ...a })));
         for (let counter = 0; counter < actions.length; counter++) {

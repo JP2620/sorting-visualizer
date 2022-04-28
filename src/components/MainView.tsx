@@ -6,15 +6,16 @@ import Bar from "./Bar";
 
 const MainView : FC =  () => {
     const speeds: number[] = [0.5, 1, 1.5, 2]
-    const [sortingSpeed, setSortingSpeed] = useState(1);
-    const [countComparisons, setCountComparisons] = useState(0);
-    const [countSwaps, setCountSwaps] = useState(0);
-
-    const [algorithm, setAlgorithm] = useState<string | null>(null);
+    const [sortingSpeed, setSortingSpeed] = useState<number>(1);
+    const [countComparisons, setCountComparisons] = useState<number>(0);
+    const [countSwaps, setCountSwaps] = useState<number>(0);
+    const [algorithm, setAlgorithm] = useState<"bubblesort" | "gnomesort" |
+     "insertionsort" | "quicksort" | "selectionsort">("bubblesort");
     const [sorting, setSorting] = useState<boolean>(false);
     const [bars, setBars] = useState<BarI[]>([]);
 
     const handleAlgorithmChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        // @ts-ignore
         setAlgorithm(event.target.value);
     }
     const algoInput: React.LegacyRef<HTMLSelectElement> | null = useRef(null);
@@ -61,7 +62,6 @@ const MainView : FC =  () => {
     const handleClickShuffle = () => {
         setCountComparisons(0);
         setCountSwaps(0);
-
         shuffleBars();
         setSorting(false);
     }
@@ -79,12 +79,6 @@ const MainView : FC =  () => {
     useEffect(() => {
         setBars(bars_ej);
     }, [])
-
-    useEffect(() => {
-        if (algorithm === null) {
-            setAlgorithm(algoInput!.current!.value);
-        }
-    }, [algorithm])
 
     const algoProps: SortProps = {
         bars,
@@ -116,13 +110,12 @@ const MainView : FC =  () => {
                     <button onClick={(e) => {
                         setCountComparisons(0);
                         setCountSwaps(0);
-                        setAlgorithm(null);
                         setSorting(true);
                     }} className="btn btn-secondary btn-sm mb-" disabled={sorting}>Start</button>
                 </div>
             </form>
 
-            {sorting && algorithm && <Sort {...algoProps}/>}
+            {sorting && <Sort {...algoProps}/>}
             
             <div>
                 <div className="w-100 d-flex flex-row justify-content-around mb-2">
