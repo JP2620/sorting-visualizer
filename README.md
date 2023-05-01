@@ -1,3 +1,3 @@
 # Sorting Visualizer
 
-- Deployed version: http://sort-visualizer.jp2620.me/
+- Deployed version: https://celebrated-manatee-abfb04.netlify.app/
